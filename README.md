@@ -14,10 +14,19 @@
 7. Click on Create Credentials.
 8. Note down the Client ID. This will be used later.
 
+### Copy Client ID into dc-config.js
+1. In the exercise code, navigate to resources/js/dc-config.js. This is loaded in the head of the exercise/index.html head.
+2. Set the clientId variable the Client ID you created earlier.
+
+
 ### Get Documentation
 You can access documentation (https://www.adobe.com/go/docsvcs_doc_pdfembed#://) for PDF Embed API.
  
 ## Exercise 1: Adding PDF Embed API to a Webpage
+
+### Copy Client ID into dc-config.js
+1. In the exercise code, navigate to resources/js/dc-config.js. This is loaded in the head of the exercise/index.html head.
+2. Set the clientId variable the Client ID you created earlier.
 
 ### Navigate PDF Embed API Demo
 1. Navigate to https://www.adobe.io/apis/documentcloud/dcsdk/pdf-embed.html
@@ -49,6 +58,76 @@ You can access documentation (https://www.adobe.com/go/docsvcs_doc_pdfembed#://)
 	});
 </script>
 ```
+19. Paste into index.html.
+20. Find the part of the code that says `<YOUR_CLIENT_ID>` and replace it with clientId.
+21. In browser, load the web page from your web server to confirm that it loads correctly.
+22. Search in index.html for `https://documentcloud.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf` and replace it with `../resources/pdfs/whitepaper.pdf`.
+23. Go back to the web page in the web browser and refresh the page to confirm the new PDF is being loaded.
+24. Change the Viewer Components in the Embed API Demo.
+25. Click on Generate Code to see where the parameters get added to the embed code.
+
 ## Exercise 2: Accessing Analytics APIs
+1. Go to Default analytics in documentation (https://www.adobe.com/devnet-docs/dcsdk_io/viewSDK/howtodata.html#default-analytics)
+2. Review the different types of events available as part of the API.
+3. Copy the default analytics sample code from teh documentation.
+
+```
+ const eventOptions = {
+   //Pass the PDF analytics events to receive.
+   //If no event is passed in listenOn, then all PDF analytics events will be received.
+   listenOn: [ AdobeDC.View.Enum.PDFAnalyticsEvents.PAGE_VIEW, AdobeDC.View.Enum.PDFAnalyticsEvents.DOCUMENT_DOWNLOAD],
+   enablePDFAnalytics: true
+ }
+
+ adobeDCView.registerCallback(
+   AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
+   function(event) {
+     console.log("Type " + event.type);
+     console.log("Data " + event.data);
+   }, eventOptions
+ );
+```
+4. In index.html, find the code section that you added earlier that looks like below and append the code above after this code:
+
+```
+var adobeDCView = new AdobeDC.View({clientId: clientId, divId: "adobe-dc-view"});
+              adobeDCView.previewFile({
+                content:{location: {url: "../resources/pdfs/whitepaper.pdf"}},
+                metaData:{fileName: "Bodea Brochure.pdf"}
+              }, {showDownloadPDF: true});
+```
+5. In your web browser, load the page and open the Console to view the console outputs from the different events as you interact with the PDF viewer.
+
+### Add Switch for capturing events
+1. In the exercise code, navigate to snippets/eventsSwitch.js and copy the contents of the file.
+2. In the event listener function, paste the code in.
+3. In the web browser, see the console outputs correctly outputting in the console when page is loaded and the PDF Viewer is interacted with.
+
+### Adobe Analytics
+1. In documentation, navigate to Adobe Analytics session https://www.adobe.com/devnet-docs/dcsdk_io/viewSDK/howtodata.html#adobe-analytics to review if you have Adobe Analytics enabled on your webpage and follow instructions to set up a reportSuite.
+2. Navigate to https://documentcloud.adobe.com/view-sdk-demo/analyticsDashboard.html in web browser to see the Analytics sample dashboard.
+
+### Google Analytics
+1. To see how you can integrate with Google Analytics, navigate to snippets/eventsSwitchGA.js.
+2. Review and use this code as an example if your webpage is tracked using Adobe Analytics and it is already embedded on the webpage.
+
 
 ## Exercise 3: Add Interactivity Based on Events
+
+### Example of Paywall
+Navigate to https://www3.technologyevaluation.com/research/white-paper/the-forrester-wave-digital-decisioning-platforms-q4-2020.html to see an example of a PDF behind a paywall. In this exercise we will review how you can add interactivity on top of a PDF viewing experience.
+
+### Add Paywall Code
+1. Go to snippets/paywallCode.html and copy the contents.
+2. In exercise/index.html and search for `<!-- TODO: EXERCISE 3: INSERT PAYWALL CODE -->`.
+3. Paste the copied code after the comment.
+4. Go to snippets/paywallEventCode.js and copy the contents.
+5. In exercise/index.html and search for `/** TODO: EXERCISE 3: ADD PAYWALL CODE */`
+6. Paste the code into that location.
+
+### Try Demo with Paywall
+1. Load page in web browser.
+2. Scroll down to a page > 2.
+3. Show the dialog come up to challenge user after the second page.
+
+## Additional Resources
