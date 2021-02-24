@@ -38,7 +38,7 @@ You can access documentation (https://www.adobe.com/go/docsvcs_doc_pdfembed#://)
 16. In index.html, search for `<!-- TODO: EXERCISE 1: INSERT PDF EMBED API CODE  -->`.
 17. Paste the `<div id="adobe-dc-view"></div>` code.
 18. Go back to the Embed API Demo and copy the following code and paste it into index.html: 
-...
+```
 <script type="text/javascript">
 	document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
 		var adobeDCView = new AdobeDC.View({clientId: "<YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
@@ -48,7 +48,7 @@ You can access documentation (https://www.adobe.com/go/docsvcs_doc_pdfembed#://)
 		}, {});
 	});
 </script>
-...
+```
 ## Exercise 2: Accessing Analytics APIs
 
 ## Exercise 3: Add Interactivity Based on Events
